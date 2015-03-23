@@ -58,7 +58,8 @@ private static final Logger logger = Logger.getLogger(DatasetPage.class.getCanon
 > cd 'glassfish-query-counter/scripts'
 > python last_logged_query_count.py dataset-page-check
 ```
-1. This does the following:
+
+- This does the following:
   1.  Creates a text file in: ```query_lists/dataset-page-check.txt```
   1.  Creates a .csv file with query counts: ```query_counts/dataset-page-check.csv```
   1.  Prints output to the terminal
