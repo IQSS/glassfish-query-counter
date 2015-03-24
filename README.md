@@ -17,22 +17,6 @@ Tested on python 2.7.
 ```
  - Example:
 ``` xml
-=======
-Count queries printed to the Glassfish logs.  Tested on python 2.7.
-
-## Setup
-
-### Glassfish: Print queries to the log
-
-1.  Open the ```persistence.xml``` file
-1.  Add this line to the end of the ```<properties>`` list
-
-```xml
-<property name="eclipselink.logging.level.sql" value="FINE"/>
-```
-
-Example:
-
 <properties>
     <!--property name="toplink.logging.level" value="FINE"/-->
     <property name="eclipselink.weaving" value="false"/>
@@ -50,7 +34,7 @@ Example:
    1.  Edit the ```DatasetPage.java```
    1.  Add this line to the top of your ```init(...)``` method:
 ```java
-logger.info("_YE_OLDE_QUERY_COUNTER_")
+logger.info("____QUERY_DEBUG____")
 ```
   - Assumes page has a logger as in 
 ``` java 
@@ -81,3 +65,8 @@ private static final Logger logger = Logger.getLogger(DatasetPage.class.getCanon
   1.  Prints output to the terminal
 
   
+  
+
+
+
+
