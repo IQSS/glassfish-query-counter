@@ -1,6 +1,7 @@
 import sys
 from os.path import dirname, isdir, isfile, join, basename
-from os import listdir
+import os
+import shutil
 from collections import Counter
 from settings_reader import get_settings_dict, PROJ_DIR, INPUT_DIR, OUTPUT_DIR,\
     SETTINGS_KEY_LOG_PATH, SETTINGS_KEY_DELIMITER
@@ -73,7 +74,7 @@ Please choose a file:
     def get_input_file_list(self):
         assert isdir(INPUT_DIR), 'Could not find input directory: %s' % INPUT_DIR
 
-        l =  [fname for fname in listdir(INPUT_DIR) if fname.endswith('.txt')]
+        l =  [fname for fname in os.listdir(INPUT_DIR) if fname.endswith('.txt')]
         l.sort()
         return l
 
@@ -89,18 +90,75 @@ Please choose a file:
 
         assert False, "File choice '%d' was not found." % fnum
         
+    def consolidate_logs(self, num_files=5):
+        """
+        Consolidate and return temp log file name to check
+        """
+        assert isfile(self.GLASSFISH_LOG_FILE_PATH), 'Could not find GLASSFISH_LOG_FILE_PATH file: %s\n**Check your settings.json file**' % self.GLASSFISH_LOG_FILE_PATH
 
-    def pull_last_queries(self, output_fname):
+        glassfish_log_dir = dirname(self.GLASSFISH_LOG_FILE_PATH)
+
+        # Get last n files, including server.log
+        #
+        slogs = [x for x in os.listdir(glassfish_log_dir)\
+                 if x.startswith('server.log') and not x=='server.log' ]
+        slogs.sort()
+        slogs = slogs[-(num_files+1):]
+        print 'slogs', slogs
+
+        slogs.append('server.log')
+        # No logs to consolidate, only orig. server.log
+        if len(slogs) == 1:
+            return self.GLASSFISH_LOG_FILE_PATH
+
+        # Clear any temp files
+        #
+        temp_log_fname = 'temp_consolidated_log.log'
+        temp_log_fullpath = join(glassfish_log_dir, temp_log_fname)
+        if isfile(temp_log_fullpath):
+            os.remove(temp_log_fullpath)
+
+        fh = open(temp_log_fullpath, 'w')
+
+        print 'Consolidating server logs'
+        with fh as outfile:
+            for slog_name in slogs:
+                print '- Adding %s' % slog_name
+
+                full_slog = join(glassfish_log_dir, slog_name)
+                with open(full_slog) as infile:
+                    for line in infile:
+                        fh.write(line)
+                #os.remove(full_slog)
+                #print '- Removed orig %s' % slog_name
+        fh.close()
+        # Replace the 'server.log' with the consolidated file
+        #
+        #shutil.move(temp_log_fullpath, self.GLASSFISH_LOG_FILE_PATH)
+
+        print 'Consolidated file created: %s' % temp_log_fullpath
+
+        return temp_log_fullpath
+
+
+
+    def pull_last_queries(self, output_fname, consolidate=False):
         """
         A bit inefficient but good enough
         """
         assert isfile(self.GLASSFISH_LOG_FILE_PATH), 'Could not find GLASSFISH_LOG_FILE_PATH file: %s\n**Check your settings.json file**' % self.GLASSFISH_LOG_FILE_PATH
         assert self.DELIMITER is not None, 'Could not find DELIMITER.\n**Check your settings.json file.**'
 
-        print 'reading file: %s' % self.GLASSFISH_LOG_FILE_PATH
+
+        if consolidate:
+            LOG_FILE_PATH = self.consolidate_logs()
+        else:
+            LOG_FILE_PATH = self.GLASSFISH_LOG_FILE_PATH
+
+        print 'reading file: %s' % LOG_FILE_PATH
 
         outlines = []
-        for line in reversed(open(self.GLASSFISH_LOG_FILE_PATH, 'r').readlines()):
+        for line in reversed(open(LOG_FILE_PATH, 'r').readlines()):
             if line.find(self.DELIMITER) > -1:
                 break
             outlines.append(line.strip())
@@ -141,14 +199,22 @@ if __name__ == '__main__':
     args = sys.argv
 
     qc = QueryCounter()
-    if not len(args)==2:
-        qc.show_instructions()
-        #qc.show_file_choices()
-    else:
+    if len(args)==2:
         last_arg = args[1]
         if last_arg == 'rerun':
             qc.show_file_choices()
         elif last_arg.isdigit():
             qc.count_queries_by_file_num(int(last_arg))
         else:
-            qc.pull_last_queries(last_arg)
+            qc.pull_last_queries(last_arg, consolidate=True)
+    #elif len(args)==3:
+    #    fname_arg = args[1]
+    #    qc.pull_last_queries(fname_arg, consolidate=True)
+    else:
+        qc.show_instructions()
+
+"""
+
+for x in range(1, 101):
+    open('f%d.txt' % x, 'w').write(`x`)
+"""
