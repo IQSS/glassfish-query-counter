@@ -34,7 +34,7 @@ Tested on python 2.7.
    1.  Edit the ```DatasetPage.java```
    1.  Add this line to the top of your ```init(...)``` method:
 ```java
-logger.info("____QUERY_DEBUG____")
+logger.info("_YE_OLDE_QUERY_COUNTER_")
 ```
   - Assumes page has a logger as in 
 ``` java 
