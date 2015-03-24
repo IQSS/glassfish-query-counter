@@ -33,7 +33,6 @@ Count queries printed to the Glassfish logs.  Tested on python 2.7.
 
 Example:
 
->>>>>>> Stashed changes
 <properties>
     <!--property name="toplink.logging.level" value="FINE"/-->
     <property name="eclipselink.weaving" value="false"/>
@@ -44,7 +43,6 @@ Example:
     <property name="eclipselink.logging.level.sql" value="FINE"/>
 </properties>
 ```
-<<<<<<< Updated upstream
 
 ### (B) For the pages you are interested in, add a logging line
 1. Add delimiters to the pages you would like to check.
