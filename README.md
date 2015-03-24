@@ -34,11 +34,7 @@ Tested on python 2.7.
    1.  Edit the ```DatasetPage.java```
    1.  Add this line to the top of your ```init(...)``` method:
 ```java
-logger.info("_YE_OLDE_QUERY_COUNTER_")
-```
-  - Assumes page has a logger as in 
-``` java 
-private static final Logger logger = Logger.getLogger(DatasetPage.class.getCanonicalName());
+System.out.println("_YE_OLDE_QUERY_COUNTER_");
 ```
 
 ## II. Update the python settings to point to your Glassfish Log
