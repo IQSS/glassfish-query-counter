@@ -74,7 +74,7 @@ private static final Logger logger = Logger.getLogger(DatasetPage.class.getCanon
 1. Run the python script, with the name of an output file:
 ```
 > cd 'glassfish-query-counter/scripts'
-> python last_logged_query_count.py dataset-page-check
+> python count_queries.py dataset-page-check
 ```
 
 - This does the following:

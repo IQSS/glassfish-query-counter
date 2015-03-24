@@ -37,15 +37,15 @@ class QueryCounter:
         for item, cnt in counts.most_common():
             line_num += 1
             outlines.append('%s,"%s"' % (cnt, item))
-            print '(%d) COUNT: %d   QUERY(truncated): %s' % (line_num, cnt, item[:70])
+            print '(%d) COUNT: %d   QUERY(truncated): %s' % (line_num, cnt, item[:100])
 
         output_fname = basename(input_fname_fullpath).replace('.txt', '_counts.csv')
         full_output_fname = join(OUTPUT_DIR, output_fname)
         open(full_output_fname, 'w').write('\n'.join(outlines))
-        print '\n\nfile written: %s' % full_output_fname
+        print '\n\nQuery count file written: %s' % full_output_fname
     
         total = sum(counts.values())
-        print '\n\nTotal number of queries: %d' % total
+        print '\nTotal number of queries: %d\n' % total
 
     def show_file_choices(self):
         option_list = []
@@ -146,7 +146,9 @@ if __name__ == '__main__':
         #qc.show_file_choices()
     else:
         last_arg = args[1]
-        if last_arg.isdigit():
-            qc.count_queries_by_file_num(last_arg)
+        if last_arg == 'rerun':
+            qc.show_file_choices()
+        elif last_arg.isdigit():
+            qc.count_queries_by_file_num(int(last_arg))
         else:
             qc.pull_last_queries(last_arg)
