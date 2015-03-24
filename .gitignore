@@ -1,7 +1,11 @@
+query_counts/*.csv
+query_lists/*.txt
+scripts/settings.json
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
+*.idea
+.idea
 # C extensions
 *.so
 
