@@ -38,7 +38,7 @@ class QueryCounter:
         for item, cnt in counts.most_common():
             line_num += 1
             outlines.append('%s,"%s"' % (cnt, item))
-            print '(%d) COUNT: %d   QUERY(truncated): %s' % (line_num, cnt, item[:100])
+            print '%s\n(%d) COUNT: %d   QUERY(truncated): %s' % (('-'*40), line_num, cnt, item)#[:150])
 
         output_fname = basename(input_fname_fullpath).replace('.txt', '_counts.csv')
         full_output_fname = join(OUTPUT_DIR, output_fname)
@@ -215,6 +215,6 @@ if __name__ == '__main__':
 
 """
 
-for x in range(1, 101):
+for x in range(1, 301):
     open('f%d.txt' % x, 'w').write(`x`)
 """
