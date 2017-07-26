@@ -31,8 +31,8 @@ Tested on python 2.7.
 ### (B) For the pages you are interested in, add a logging line
 1. Add delimiters to the pages you would like to check.
 1. Example: 
-   1.  Edit the ```DatasetPage.java```
-   1.  Add this line to the top of your ```init(...)``` method:
+    1.  Edit the ```DatasetPage.java```
+    1.  Add this line to the top of your ```init(...)``` method:
 ```java
 System.out.println("_YE_OLDE_QUERY_COUNTER_");
 ```
@@ -48,7 +48,7 @@ System.out.println("_YE_OLDE_QUERY_COUNTER_");
 ## III. Run It
 
 1. Go to the page you would like to check: e.g. ```http://localhost:8080/dataset.xhtml?id=3&versionId=15```
-  - The log should contain SQL statements from the page load
+    - The log should contain SQL statements from the page load
 1. Run the python script, with the name of an output file:
 ```
 > cd 'glassfish-query-counter/scripts'
@@ -56,9 +56,9 @@ System.out.println("_YE_OLDE_QUERY_COUNTER_");
 ```
 
 - This does the following:
-  1.  Creates a text file in: ```query_lists/dataset-page-check.txt``` (the ".txt" is appended automatically)
-  1.  Creates a .csv file with query counts: ```query_counts/dataset-page-check.csv```
-  1.  Prints output to the terminal
+    1.  Creates a text file in: ```query_lists/dataset-page-check.txt``` (the ".txt" is appended automatically)
+    1.  Creates a .csv file with query counts: ```query_counts/dataset-page-check.csv```
+    1.  Prints output to the terminal
 
   
   
