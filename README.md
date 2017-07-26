@@ -48,7 +48,7 @@ System.out.println("_YE_OLDE_QUERY_COUNTER_");
 ## III. Run It
 
 1. Go to the page you would like to check: e.g. ```http://localhost:8080/dataset.xhtml?id=3&versionId=15```
-  - The log should continue SQL statements from the page load
+  - The log should contain SQL statements from the page load
 1. Run the python script, with the name of an output file:
 ```
 > cd 'glassfish-query-counter/scripts'
@@ -56,7 +56,7 @@ System.out.println("_YE_OLDE_QUERY_COUNTER_");
 ```
 
 - This does the following:
-  1.  Creates a text file in: ```query_lists/dataset-page-check.txt```
+  1.  Creates a text file in: ```query_lists/dataset-page-check.txt``` (the ".txt" is appended automatically)
   1.  Creates a .csv file with query counts: ```query_counts/dataset-page-check.csv```
   1.  Prints output to the terminal
 
